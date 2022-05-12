@@ -1,7 +1,7 @@
 /*
  ============================================================================
- Name        : NB_LDPC_DECODER.c
- Author      : Jesus Lacruz
+ Name        : main.c
+ Author      : Jesus Lacruz, Yao-Ming Kuo
  Version     :
  Copyright   : 
  Description :
@@ -13,8 +13,6 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
-//#include <gsl/gsl_rng.h>
-//#include <gsl/gsl_randist.h>
 
 #include "constantes_CONF.h"
 #include "gf_tables_GF16.h"
@@ -26,9 +24,6 @@
 void awgn_channel(double r_ch[N_code][m_field], double sigma);
 void LLR_function(double rx_points[N_code][m_field], double sigma, double constante, double Ln_aux[q_field][N_code]);
 double randn_notrig(double mu, double sigma);
-unsigned int binary_dec(double r_ch[m_field]);
-
-//gsl_rng * rng; // generador de números aleatorios global
 
 /* Constantes utilizadas para saturacion y truncado */
 #if LLR_QUANT == 1
@@ -148,8 +143,6 @@ int main(int argc, char * argv[]) {
 			EbNodB[i] = atof(argv[i+3]);
 		}
 	}
-
-	//rng = gsl_rng_alloc(gsl_rng_mt19937); // Instancio el generador
 
 	for (i=0; i<EbNo_NUM;i++)
 	{
@@ -760,17 +753,6 @@ void awgn_channel(double r_ch[N_code][m_field], double sigma)
 		}
 	}
 }
-
-unsigned int binary_dec(double r_ch[m_field])
-{
-	int i;
-	unsigned int decimal = 0;	
-	for (i=0; i<m_field; i++){
-		decimal = decimal + (unsigned int)((char)r_ch[i]<<m_field);
-		printf("r_ch: %f\n",r_ch[i]);
-	}
-}
-
 
 void LLR_function(double rx_points[N_code][m_field], double sigma, double constante, double Ln_aux[q_field][N_code])
 {
