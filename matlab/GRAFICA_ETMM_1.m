@@ -17,9 +17,9 @@ jj=0;
 iter = 50;
 clear EC PT
 
-seed = [1977];
-EBNO = [0:0.25:4.5];
-Nerrors = [25];
+seed = 1977;
+EBNO = 0:0.5:4.5;
+Nerrors = 25;
 ite_max = 50;
 
 Z = ['[C] T-MM LAYERED (' num2str(iter) ' iter), SF=0.9 '];
@@ -27,7 +27,7 @@ Y1 = zeros(1,length(EBNO));
 for j=1:length(EBNO)
     for i=1:length(seed)
         for k = 1:length(Nerrors)
-            archivo2 = ['RESULTS_ETMM_q16_dc4/(' num2str(N) ',' num2str(K) ')_L' num2str(Nerrors(k)) '[' num2str(seed(i)) ']_N' num2str(N*p) '_K' num2str(K*p) '_EBN' num2str(EBNO(j),'%2.2f') '.txt'];
+            archivo2 = ['../RESULTS_ETMM_q16_dc4/(' num2str(N) ',' num2str(K) ')_L' num2str(Nerrors(k)) '[' num2str(seed(i)) ']_N' num2str(N*p) '_K' num2str(K*p) '_EBN' num2str(EBNO(j),'%2.2f') '.txt'];
             if exist(archivo2,'file')
                 fid = fopen(archivo2, 'r');
                 MNPE_Hdecoded = zeros(1,ite_max);
@@ -51,9 +51,6 @@ for j=1:length(EBNO)
         end
     end
 end
-
-%((623/28)/32)/4
-%Y1 = EC./PT;
 
 %% GRAFICA
 
