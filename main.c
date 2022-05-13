@@ -60,45 +60,51 @@ int main(int argc, char * argv[]) {
 	float sigma[10];
 	float sigma_2[10];
 
-	int 	decoded[N_code][m_field];
+	int16_t 	decoded[N_code][m_field];
 	float 	r_ch[N_code][m_field];
-	int 	Ln_aux[q_field][N_code];
+	int16_t 	Ln_aux[q_field][N_code];
 	float 	Ln_aux_float[q_field][N_code];
-	float 	Rmn_SRL[M_code][q_field][dc];
+	int16_t 	Rmn_SRL[M_code][q_field][dc];
 
-	float Qmn[q_field][dc];
-	float Qmn_temp[q_field];
+	int16_t Qmn[q_field][dc];
+	int16_t Qmn_temp[q_field];
 
-	int aux1, aux2;
-	float MAX_temp; //MAX_temp2;
+	int16_t aux1, aux2;
+	int16_t MAX_temp; //MAX_temp2;
 
-    float dQ_min1, dQ_min2; 
-    int dQ_pos1, dQ_pos2;
+    int16_t dQ_min1, dQ_min2; 
+    int16_t dQ_pos1, dQ_pos2;
     
-	int beta;
-	int z[dc];
-	float dWmn[q_field][dc];
-	int temp[q_field][dc];
-	float min1[q_field], min2[q_field];
-	int pos[q_field];
-	float max[q_field/2];
-	int cam1_temp[q_field/2 - 1], cam2_temp[q_field/2 - 1];
-	float min_global[q_field]; //min2_global[q_field];
-	int cam1[q_field], cam2[q_field];
-	float Rmn[q_field][dc];
-	float Qn_NEW[q_field][dc];
+	int16_t beta;
+	int16_t z[dc];
+	int16_t dWmn[q_field][dc];
+	int16_t temp[q_field][dc];
+	int16_t min1[q_field], min2[q_field];
+	int16_t pos[q_field];
+	int16_t max[q_field/2];
+	int16_t cam1_temp[q_field/2 - 1], cam2_temp[q_field/2 - 1];
+	int16_t min_global[q_field]; //min2_global[q_field];
+	int16_t cam1[q_field], cam2[q_field];
+	int16_t Rmn[q_field][dc];
+	int16_t Qn_NEW[q_field][dc];
 
-	int H_decoded[it_max];
+	int16_t H_decoded[it_max];
 	int MNBE_Hdecoded[it_max];
 	int MNPE_Hdecoded[it_max];
 
-	int error = 0;
+	int16_t error = 0;
+
+	int16_t min_temp;
+	int16_t min_temp2;
+	int16_t pos_temp;
+
+	int16_t oRmn_temp;
 
 	char nombre_file[120];
 	//char nombre_file_rng[120];
 	FILE* archivo;
 
-	int LPerrors = 0;		/* Numero de errores a buscar */
+	int16_t LPerrors = 0;		/* Numero de errores a buscar */
 	int semilla = 0;
 	float EbNodB[10];
 	int EbNo_NUM = 0;
@@ -313,6 +319,8 @@ int main(int argc, char * argv[]) {
                             /* Extract Qmn(a) messages from Qn(a) memories */
 				            for (i=0;i<dc;i++)
 	                        {
+								aux2 = pow_coefH[row][i] + 1;
+		                        aux1 = q_field - aux2;
 
 					            for (j=0;j<q_field;j++)
                                 {
@@ -329,10 +337,7 @@ int main(int argc, char * argv[]) {
 		                            }
 		                        }
 		                        else
-		                        {
-		                            aux2 = pow_coefH[row][i] + 1;
-		                            aux1 = q_field - aux2;
-
+		                        {		                
 		                            for (k = aux2; k < q_field; k++)
 		                            {
 		                                Qmn[k][i] = Qmn_temp[k-aux2+1];
@@ -395,9 +400,9 @@ int main(int argc, char * argv[]) {
 					        /* Busqueda de minimos */
 					        for (j=0;j<q_field;j++)
 					        {
-			                    float min_temp = dWmn[j][0];
-						        float min_temp2 = 10000;
-						        int pos_temp = 0;
+			                    min_temp = dWmn[j][0];
+						        min_temp2 = 10000;
+						        pos_temp = 0;
 						   
                                 for (i=1;i<dc;i++)
                                 {
@@ -421,9 +426,9 @@ int main(int argc, char * argv[]) {
                             /* Calculo de la columna extra */
                             for (i=0;i<q_field-1;i++)
                             {
-	                            float min_temp = min1[i+1];
+	                            min_temp = min1[i+1];
                                 //float min2_temp = 10000;
-                                int pos_temp = 0;
+                                pos_temp = 0;
                                 
 					            max[0] = min1[i+1];
 					            for (j=0;j<q_field/2-1;j++)
@@ -508,8 +513,7 @@ int main(int argc, char * argv[]) {
                             */
                             
                             for (i=0;i<dc;i++)
-					        {
-				                float oRmn_temp;
+					        {				                
 						        for (j=0;j<q_field;j++)
 						        {
 							        if ( (j == dQ_pos1) || (j == dQ_pos2) || (j == 0) ) /* Si estamos en el elemento del campo que contiene el minimo de la columna extra entonces... */
