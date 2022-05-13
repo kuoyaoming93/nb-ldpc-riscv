@@ -13,6 +13,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "constantes_CONF.h"
 #include "gf_tables_GF16.h"
@@ -21,70 +22,71 @@
 
 
 /*Functions*/
-void awgn_channel(double r_ch[N_code][m_field], double sigma);
-void LLR_function(double rx_points[N_code][m_field], double sigma, double constante, double Ln_aux[q_field][N_code]);
-double randn_notrig(double mu, double sigma);
+void awgn_channel(float r_ch[N_code][m_field], float sigma);
+void LLR_function(float rx_points[N_code][m_field], float sigma, float constante, float Ln_aux[q_field][N_code]);
+float randn_notrig(float mu, float sigma);
 
 /* Constantes utilizadas para saturacion y truncado */
 #if LLR_QUANT == 1
-   double LLR_SATp1;
-   double LLR_SATm1;
-   double LLR_FLOORp1;
-   double LLR_FLOORm1;
+   float LLR_SATp1;
+   float LLR_SATm1;
+   float LLR_FLOORp1;
+   float LLR_FLOORm1;
 #endif
 #if DECO_QUANT == 1
-    double QN_SATp1;
-    double QN_SATm1;
-    double QN_FLOORp1;
-    double QN_FLOORm1;
+    float QN_SATp1;
+    float QN_SATm1;
+    float QN_FLOORp1;
+    float QN_FLOORm1;
 
-    double CN_SATp1;
-    double CN_SATm1;
-    double CN_FLOORp1;
-    double CN_FLOORm1;
+    float CN_SATp1;
+    float CN_SATm1;
+    float CN_FLOORp1;
+    float CN_FLOORm1;
 #endif
 
 #if RCH_QUANT == 1
-    double RCH_SATp1;
-    double RCH_SATm1;
-    double RCH_FLOORp1;
-    double RCH_FLOORm1;
+    float RCH_SATp1;
+    float RCH_SATm1;
+    float RCH_FLOORp1;
+    float RCH_FLOORm1;
 #endif
 
 int main(int argc, char * argv[]) {
 
-	int ii,i,j,k,eS,eC,var,row; /* Used for loop indexs */
-
-	double SNRdB[10];
-	double sigma[10];
-	double sigma_2[10];
+	int i,j,k,eS,eC,var,row; /* Used for loop indexs */
+	
+	float SNRdB[10];
+	float sigma[10];
+	float sigma_2[10];
 
 	int 	decoded[N_code][m_field];
-	double 	r_ch[N_code][m_field];
-	double 	Ln_aux[q_field][N_code];
-	double 	Rmn_SRL[M_code][q_field][dc];
+	float 	r_ch[N_code][m_field];
+	int 	Ln_aux[q_field][N_code];
+	float 	Ln_aux_float[q_field][N_code];
+	float 	Rmn_SRL[M_code][q_field][dc];
 
-	double Qmn[q_field][dc];
-	double Qmn_temp[q_field];
+	float Qmn[q_field][dc];
+	float Qmn_temp[q_field];
 
 	int aux1, aux2;
-	double MAX_temp, MAX_temp2;
+	float MAX_temp; //MAX_temp2;
 
-    double dQ_min1, dQ_min2; 
+    float dQ_min1, dQ_min2; 
     int dQ_pos1, dQ_pos2;
     
 	int beta;
 	int z[dc];
-	double dWmn[q_field][dc];
+	float dWmn[q_field][dc];
 	int temp[q_field][dc];
-	double min1[q_field], min2[q_field];
+	float min1[q_field], min2[q_field];
 	int pos[q_field];
-	double max[q_field/2];
+	float max[q_field/2];
 	int cam1_temp[q_field/2 - 1], cam2_temp[q_field/2 - 1];
-	double min_global[q_field], min2_global[q_field];
+	float min_global[q_field]; //min2_global[q_field];
 	int cam1[q_field], cam2[q_field];
-	double Rmn[q_field][dc];
-	double Qn_NEW[q_field][dc];
+	float Rmn[q_field][dc];
+	float Qn_NEW[q_field][dc];
 
 	int H_decoded[it_max];
 	int MNBE_Hdecoded[it_max];
@@ -98,7 +100,7 @@ int main(int argc, char * argv[]) {
 
 	int LPerrors = 0;		/* Numero de errores a buscar */
 	int semilla = 0;
-	double EbNodB[10];
+	float EbNodB[10];
 	int EbNo_NUM = 0;
 	
    #if LLR_QUANT == 1
@@ -272,18 +274,19 @@ int main(int argc, char * argv[]) {
 			        awgn_channel(r_ch, sigma[eS]);
 
 			        /* LLRs_function Ln(a)=ln(Pr(cn=zn|channel)/Pr(cn=a|channel)) */
-			        LLR_function(r_ch, sigma[eS], sigma_2[eS], Ln_aux);
+			        LLR_function(r_ch, sigma[eS], sigma_2[eS], Ln_aux_float);
 
-					//if(eC == 1){
-						/*printf("Message with noise: ");
-						for (i = 0; i< N_code; i++)
-							for(j=0; j<m_field;j++)
-								printf("r_ch[%d][%d]: %f\n",i,j,r_ch[i][j]);*/
+					for(i=0;i<q_field;i++)
+						for(j=0;j<N_code;j++)
+							Ln_aux[i][j] = (int) Ln_aux_float[i][j];
+							//printf("%d, \n",Ln_aux_int[i][j]);}
 
-						/*printf("LLR Function: ");
+					/*if(eC == 1){
+
+						printf("LLR Function: ");
 						for (i = 0; i< q_field; i++){
 							for(j=0; j<N_code;j++)
-								printf("%f, \n",Ln_aux[i][j]);
+								printf("%d, \n",Ln_aux[i][j]);
 							printf("\n");
 						}*/
 //								printf("Ln_aux[%d][%d]: %f\n",i,j,Ln_aux[i][j]);
@@ -392,8 +395,8 @@ int main(int argc, char * argv[]) {
 					        /* Busqueda de minimos */
 					        for (j=0;j<q_field;j++)
 					        {
-			                    double min_temp = dWmn[j][0];
-						        double min_temp2 = 10000;
+			                    float min_temp = dWmn[j][0];
+						        float min_temp2 = 10000;
 						        int pos_temp = 0;
 						   
                                 for (i=1;i<dc;i++)
@@ -418,8 +421,8 @@ int main(int argc, char * argv[]) {
                             /* Calculo de la columna extra */
                             for (i=0;i<q_field-1;i++)
                             {
-	                            double min_temp = min1[i+1];
-                                double min2_temp = 10000;
+	                            float min_temp = min1[i+1];
+                                //float min2_temp = 10000;
                                 int pos_temp = 0;
                                 
 					            max[0] = min1[i+1];
@@ -506,7 +509,7 @@ int main(int argc, char * argv[]) {
                             
                             for (i=0;i<dc;i++)
 					        {
-				                double oRmn_temp;
+				                float oRmn_temp;
 						        for (j=0;j<q_field;j++)
 						        {
 							        if ( (j == dQ_pos1) || (j == dQ_pos2) || (j == 0) ) /* Si estamos en el elemento del campo que contiene el minimo de la columna extra entonces... */
@@ -731,7 +734,7 @@ int main(int argc, char * argv[]) {
 
 
 
-void awgn_channel(double r_ch[N_code][m_field], double sigma)
+void awgn_channel(float r_ch[N_code][m_field], float sigma)
 {
 	int i,j;
 
@@ -754,10 +757,10 @@ void awgn_channel(double r_ch[N_code][m_field], double sigma)
 	}
 }
 
-void LLR_function(double rx_points[N_code][m_field], double sigma, double constante, double Ln_aux[q_field][N_code])
+void LLR_function(float rx_points[N_code][m_field], float sigma, float constante, float Ln_aux[q_field][N_code])
 {
    int i,j,k;
-   double MIN_temp;
+   float MIN_temp;
 
     for (i=0;i<N_code;i++)
     {
@@ -819,12 +822,12 @@ void save_state(char nombre[100])
 */
 
 //Channel
-//double randn_notrig(double mu=0.0, double sigma=1.0) //http://www.dreamincode.net/code/snippet1446.htm
-double randn_notrig(double mu, double sigma) //http://www.dreamincode.net/code/snippet1446.htm
+//float randn_notrig(float mu=0.0, float sigma=1.0) //http://www.dreamincode.net/code/snippet1446.htm
+float randn_notrig(float mu, float sigma) //http://www.dreamincode.net/code/snippet1446.htm
 {
     static bool deviateAvailable = false; // flag
     static float storedDeviate;   // deviate from previous calculation
-    double polar, rsquared, var1, var2;
+    float polar, rsquared, var1, var2;
  
  
     // If no deviate has been stored, the polar Box-Muller transformation is 

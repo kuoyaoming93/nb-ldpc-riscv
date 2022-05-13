@@ -13,15 +13,15 @@
 	#endif
 
 	/* Parametros del algoritmo */
-	#define scaling_factor 0.9
-	#define voto 1.5
+	#define scaling_factor 1
+	#define voto 1
 	
 	/* Parametros del decodificador */
     #define it_max 50 		/* Numero de iteraciones a simular para el algoritmo */
     #define Mchannels 1e10	/* Maximo numero de canales a simular */
 
    
-    #define LLR_SCALE 1  /* 0 --> No Scale   ,   1 --> 1/sigma   ,    2 --> 2/sigma^2 */
+    #define LLR_SCALE 2  /* 0 --> No Scale   ,   1 --> 1/sigma   ,    2 --> 2/sigma^2 */
 
    /* CUANTIFICACION PARA LOS BITS PROVENIENTES DEL CANAL*/
     #define RCH_QUANT 0
