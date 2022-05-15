@@ -294,9 +294,9 @@ int main(int argc, char * argv[]) {
 							for(j=0; j<N_code;j++)
 								printf("%d, \n",Ln_aux[i][j]);
 							printf("\n");
-						}*/
-//								printf("Ln_aux[%d][%d]: %f\n",i,j,Ln_aux[i][j]);
-					//}
+						}
+
+					}*/
 					
 					
 			        /* Inicialize Rmn_SRL to zero values */
