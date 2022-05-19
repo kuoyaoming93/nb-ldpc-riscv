@@ -13,8 +13,8 @@
 	#endif
 
 	/* Parametros del algoritmo */
-	#define scaling_factor 0.9
-	#define voto 1.5
+	#define scaling_factor 1
+	#define voto 1
 	
 	/* Parametros del decodificador */
     #define it_max 50 		/* Numero de iteraciones a simular para el algoritmo */
@@ -50,6 +50,6 @@
 
     
     /* Directorio para almacenar resultados */
-	char resultspath[] =  "./RESULTS_ETMM_q16_dc4/";
+	char resultspath[] =  "./RESULTS_ETMM_q16_dc4_float/";
 	
 #endif /* CONSTANTES_H_ */

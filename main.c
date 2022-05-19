@@ -53,7 +53,7 @@ double randn_notrig(double mu, double sigma);
 
 int main(int argc, char * argv[]) {
 
-	int ii,i,j,k,eS,eC,var,row; /* Used for loop indexs */
+	int i,j,k,eS,eC,var,row; /* Used for loop indexs */
 
 	double SNRdB[10];
 	double sigma[10];
@@ -68,7 +68,7 @@ int main(int argc, char * argv[]) {
 	double Qmn_temp[q_field];
 
 	int aux1, aux2;
-	double MAX_temp, MAX_temp2;
+	double MAX_temp; //MAX_temp2;
 
     double dQ_min1, dQ_min2; 
     int dQ_pos1, dQ_pos2;
@@ -81,7 +81,7 @@ int main(int argc, char * argv[]) {
 	int pos[q_field];
 	double max[q_field/2];
 	int cam1_temp[q_field/2 - 1], cam2_temp[q_field/2 - 1];
-	double min_global[q_field], min2_global[q_field];
+	double min_global[q_field]; //min2_global[q_field];
 	int cam1[q_field], cam2[q_field];
 	double Rmn[q_field][dc];
 	double Qn_NEW[q_field][dc];
@@ -419,7 +419,6 @@ int main(int argc, char * argv[]) {
                             for (i=0;i<q_field-1;i++)
                             {
 	                            double min_temp = min1[i+1];
-                                double min2_temp = 10000;
                                 int pos_temp = 0;
                                 
 					            max[0] = min1[i+1];
