@@ -56,6 +56,11 @@ end
 
 load('T_MM_50_SF0_9.mat')
 load('T_MM_50_SF1.mat')
+load('T_MM_50_SF1_INT.mat')
+
+
+load('FB_MM_50SF1.mat')
+load('FB_MM_50SF1_INT.mat')
 
 figure(1), clf
 semilogy(EBNO_TMM,PER_TMM,'k--');
@@ -64,12 +69,17 @@ hold on;
 semilogy(EBNO_TMM,[595/3840 435/4864 418/10624 414/18432 378/51840 324/99840 295/406144 288/2500864 179/14007936 107/(484291*32*4)],'b-*');
 semilogy(EBNO,Y_GOLD,'g-*');
 semilogy(EBNO,Y_1,'m-*');
-semilogy(EBNO,Y1,'r-*');
+semilogy(EBNO,Y1_MM_INT,'r-*');
+semilogy(EBNO,Y1_FB_FLOAT,'y-*');
+semilogy(EBNO,Y1_FB_INT,'k-*');
+
 legend( 'Golden',...
         '[MATLAB] MM (50 iter), SF=1.2 ',...
         '[C] T-MM LAYERED (50 iter), FLOAT, SF=0.9 ',...
         '[C] T-MM LAYERED (50 iter), FLOAT, SF=1 ',...
-        Z);
+        '[C] T-MM LAYERED (50 iter), INT, SF=1 ',...
+        '[C] FB-MM LAYERED (50 iter), FLOAT, SF=1 ',...
+        '[C] FB-MM LAYERED (50 iter), INT, SF=1 ');
 xlabel('E_b/N_o (dB)'), ylabel('FER');
 grid on;
 
