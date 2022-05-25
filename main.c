@@ -20,7 +20,7 @@
 #include "CNU_tables_GF16.h"
 #include "Hmat_N32_M16_GF16.h"
 
-//#define FOR_BACK
+#define FOR_BACK
 
 /*Functions*/
 void awgn_channel(float r_ch[N_code][m_field], float sigma);
@@ -439,9 +439,12 @@ int main(int argc, char * argv[]) {
 									R_aux_2[i]  = Qmn[i][4-a];
 								}
 								for(i=0;i<q_field;i++){
-
-									// Search maximum
+									
+									min_temp = 10000;
+									min_temp_2 = 10000;
+									
 									for(k=0;k<q_field;k++){
+										// Search maximum
 
 										// Forward
 										if(R_Forward[k][a-2] > R_aux[wires[k][i]])
@@ -454,12 +457,9 @@ int main(int argc, char * argv[]) {
 											R_compare_2[k] = R_Backward[k][5-a];
 										else
 											R_compare_2[k] = R_aux_2[wires[k][i]];
-									}
 
-									// Search minimum
-									min_temp = 10000;
-									min_temp_2 = 10000;
-									for(k=0;k<q_field;k++){
+										// Search minimum
+
 										// Forward
 										if(R_compare[k] < min_temp)
 											min_temp = R_compare[k];
@@ -479,16 +479,14 @@ int main(int argc, char * argv[]) {
 									R_Backward_aux[i] = R_Backward[i][a];
 
 								for(i=0;i<q_field;i++){
-									// Search maximum
+									min_temp = 10000;
 									for(k=0;k<q_field;k++){
+										// Search maximum
 										if(R_Forward[k][a-2] > R_Backward_aux[wires[k][i]])
 												R_compare[k] = R_Forward[k][a-2];
 											else
 												R_compare[k] = R_Backward_aux[wires[k][i]];
-									}
-									// Search minimum
-									min_temp = 10000;
-									for(k=0;k<q_field;k++){
+										// Search minimum
 										if(R_compare[k] < min_temp)
 											min_temp = R_compare[k];
 									}
