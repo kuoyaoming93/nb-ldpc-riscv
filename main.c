@@ -112,7 +112,7 @@ int main(int argc, char * argv[]) {
 	int a;
 	int16_t R_Forward[q_field][dc], R_Backward[q_field][dc], R_Aux[q_field][dc];
     int16_t R_aux[q_field], R_aux_2[q_field], R_compare[q_field], R_compare_2[q_field], R_Backward_aux[q_field];
-    int16_t min_temp, min_temp_2;
+    int16_t min_temp, min_temp_2, min_temp_3;
 #endif
 
 	int16_t H_decoded[it_max];
@@ -419,80 +419,57 @@ int main(int argc, char * argv[]) {
 								for(i=0;i<q_field;i++){        
 									if(j==0)
 										R_Forward[i][j] = Qmn[i][j];
-									else
-										R_Forward[i][j] = 0;
 
 									if(j==dc-1){
 										R_Backward[i][j] = Qmn[i][j];
 										R_Aux[i][j] = Qmn[i][j];
-									}
-									else{
-										R_Backward[i][j] = 0;
-										R_Aux[i][j] = 0;
-									}            
+									}      
 								}
 							}
 
 							for(a=2;a<dc;a++){
 								for(i=0;i<q_field;i++){
-									R_aux[i]    = Qmn[i][a-1];
-									R_aux_2[i]  = Qmn[i][4-a];
-								}
-								for(i=0;i<q_field;i++){
-									
+
 									min_temp = 10000;
-									min_temp_2 = 10000;
-									
+									min_temp_2 = 10000;     
+									min_temp_3 = 10000;           
 									for(k=0;k<q_field;k++){
 										// Search maximum
-
 										// Forward
-										if(R_Forward[k][a-2] > R_aux[wires[k][i]])
+										if(R_Forward[k][a-2] > Qmn[wires[k][i]][a-1])
 											R_compare[k] = R_Forward[k][a-2];
 										else
-											R_compare[k] = R_aux[wires[k][i]];
+											R_compare[k] = Qmn[wires[k][i]][a-1];
 
 										// Backward
-										if(R_Backward[k][5-a] > R_aux_2[wires[k][i]])
+										if(R_Backward[k][5-a] > Qmn[wires[k][i]][4-a])
 											R_compare_2[k] = R_Backward[k][5-a];
 										else
-											R_compare_2[k] = R_aux_2[wires[k][i]];
+											R_compare_2[k] = Qmn[wires[k][i]][4-a];
 
 										// Search minimum
-
 										// Forward
 										if(R_compare[k] < min_temp)
 											min_temp = R_compare[k];
 										// Backward
 										if(R_compare_2[k] < min_temp_2)
 											min_temp_2 = R_compare_2[k];
-									}
 
-									R_Forward[i][a-1] = min_temp;
-									R_Backward[i][4-a] = min_temp_2;
-								}
-							}
-
-							// Standard Min Max
-							for(a=2;a<dc;a++){
-								for(i=0;i<q_field;i++)
-									R_Backward_aux[i] = R_Backward[i][a];
-
-								for(i=0;i<q_field;i++){
-									min_temp = 10000;
-									for(k=0;k<q_field;k++){
+										// Standard Min Max
 										// Search maximum
-										if(R_Forward[k][a-2] > R_Backward_aux[wires[k][i]])
+										if(R_Forward[k][a-2] > R_Backward[wires[k][i]][a])
 												R_compare[k] = R_Forward[k][a-2];
 											else
-												R_compare[k] = R_Backward_aux[wires[k][i]];
+												R_compare[k] = R_Backward[wires[k][i]][a];
+										
 										// Search minimum
-										if(R_compare[k] < min_temp)
-											min_temp = R_compare[k];
+										if(R_compare[k] < min_temp_3)
+											min_temp_3 = R_compare[k];
 									}
-
-									Rmn[i][a-1] = min_temp;
-								}        
+									R_Forward[i][a-1] = min_temp;
+									R_Backward[i][4-a] = min_temp_2;
+									Rmn[i][a-1] = min_temp_3;
+								}  
 							}
 
 							for(i=0;i<q_field;i++){
