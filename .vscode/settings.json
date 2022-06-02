@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stdint.h": "c",
+        "constantes_conf.h": "c"
+    }
+}
