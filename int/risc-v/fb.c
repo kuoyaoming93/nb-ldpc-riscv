@@ -185,21 +185,21 @@ int main(void)
         
         // Store 
         // 16 (int16_t) * 4 (columns) / 8
-        asm volatile("vsse16.v v17, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v17, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[0][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v18, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v18, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[1][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v19, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v19, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[2][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v20, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v20, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[3][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v21, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v21, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[4][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v22, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v22, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[5][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v23, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v23, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[6][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v24, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v24, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[7][a-1] = R_compare_vec[0];
 
         /***************************************
@@ -244,21 +244,21 @@ int main(void)
         
         // Store 
         // 16 (int16_t) * 4 (columns) / 8
-        asm volatile("vsse16.v v17, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v17, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[0][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v18, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v18, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[1][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v19, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v19, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[2][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v20, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v20, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[3][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v21, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v21, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[4][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v22, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v22, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[5][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v23, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v23, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[6][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v24, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v24, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[7][4-a] = R_compare_vec[0];
 
         /***************************************
@@ -319,21 +319,21 @@ int main(void)
         
         // Store 
         // 16 (int16_t) * 4 (columns) / 8
-        asm volatile("vsse16.v v17, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v17, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[8][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v18, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v18, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[9][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v19, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v19, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[10][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v20, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v20, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[11][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v21, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v21, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[12][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v22, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v22, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[13][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v23, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v23, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[14][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v24, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v24, (%0);" ::"r"(&R_compare_vec[0]));
         R_Forward[15][a-1] = R_compare_vec[0];
 
         /***************************************
@@ -378,21 +378,21 @@ int main(void)
         
         // Store 
         // 16 (int16_t) * 4 (columns) / 8
-        asm volatile("vsse16.v v17, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v17, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[8][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v18, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v18, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[9][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v19, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v19, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[10][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v20, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v20, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[11][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v21, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v21, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[12][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v22, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v22, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[13][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v23, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v23, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[14][4-a] = R_compare_vec[0];
-        asm volatile("vsse16.v v24, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v24, (%0);" ::"r"(&R_compare_vec[0]));
         R_Backward[15][4-a] = R_compare_vec[0];
 
 #else
@@ -477,21 +477,21 @@ int main(void)
         asm volatile("vredmin.vs v24, v24, v25;"); 
 
         // Store 
-        asm volatile("vsse16.v v17, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v17, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[8][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v18, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v18, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[9][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v19, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v19, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[10][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v20, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v20, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[11][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v21, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v21, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[12][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v22, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v22, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[13][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v23, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v23, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[14][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v24, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v24, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[15][a-1] = R_compare_vec[0];
 
 
@@ -541,21 +541,21 @@ int main(void)
 
         // Store 
         // 16 (int16_t) * 4 (columns) / 8
-        asm volatile("vsse16.v v17, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v17, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[0][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v18, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v18, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[1][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v19, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v19, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[2][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v20, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v20, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[3][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v21, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v21, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[4][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v22, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v22, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[5][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v23, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v23, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[6][a-1] = R_compare_vec[0];
-        asm volatile("vsse16.v v24, (%0), %1;" ::"r"(&R_compare_vec[0]), "r"(8));
+        asm volatile("vse16.v v24, (%0);" ::"r"(&R_compare_vec[0]));
         R_Aux[7][a-1] = R_compare_vec[0];
 
 #else
