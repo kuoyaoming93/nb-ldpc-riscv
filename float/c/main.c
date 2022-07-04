@@ -177,7 +177,7 @@ int main(int argc, char * argv[]) {
 		sigma[i] = sqrt(pow(10,(-SNRdB[i]/10)));
       
         #if LLR_SCALE == 2		
-            sigma_2[i] = (2/(sigma[i]*sigma[i]));
+            sigma_2[i] = (1/(sigma[i]*sigma[i]*2));
         #endif		
         #if LLR_SCALE == 1
             sigma_2[i] = 1/sigma[i];

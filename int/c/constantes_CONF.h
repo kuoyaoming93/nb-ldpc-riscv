@@ -17,7 +17,7 @@
 	#define voto 1
 	
 	/* Parametros del decodificador */
-    #define it_max 50 		/* Numero de iteraciones a simular para el algoritmo */
+    #define it_max 18 		/* Numero de iteraciones a simular para el algoritmo */
     #define Mchannels 1e10	/* Maximo numero de canales a simular */
 
    

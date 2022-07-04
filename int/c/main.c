@@ -20,7 +20,6 @@
 #include "CNU_tables_GF16.h"
 #include "Hmat_N32_M16_GF16.h"
 
-#define FOR_BACK
 
 /*Functions*/
 void awgn_channel(float r_ch[N_code][m_field], float sigma);
@@ -52,25 +51,6 @@ float randn_notrig(float mu, float sigma);
     float RCH_FLOORp1;
     float RCH_FLOORm1;
 #endif
-
-int wires[q_field][q_field] = {
-    {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},
-    {1,0,5,9,15,2,11,14,10,3,8,6,13,12,7,4},
-    {2,5,0,6,10,1,3,12,15,11,4,9,7,14,13,8},
-    {3,9,6,0,7,11,2,4,13,1,12,5,10,8,15,14},
-    {4,15,10,7,0,8,12,3,5,14,2,13,6,11,9,1},
-    {5,2,1,11,8,0,9,13,4,6,15,3,14,7,12,10},
-    {6,11,3,2,12,9,0,10,14,5,7,1,4,15,8,13},
-    {7,14,12,4,3,13,10,0,11,15,6,8,2,5,1,9},
-    {8,10,15,13,5,4,14,11,0,12,1,7,9,3,6,2},
-    {9,3,11,1,14,6,5,15,12,0,13,2,8,10,4,7},
-    {10,8,4,12,2,15,7,6,1,13,0,14,3,9,11,5},
-    {11,6,9,5,13,3,1,8,7,2,14,0,15,4,10,12},
-    {12,13,7,10,6,14,4,2,9,8,3,15,0,1,5,11},
-    {13,12,14,8,11,7,15,5,3,10,9,4,1,0,2,6},
-    {14,7,13,15,9,12,8,1,6,4,11,10,5,2,0,3},
-    {15,4,8,14,1,10,13,9,2,7,5,12,11,6,3,0}
-};
 
 int main(int argc, char * argv[]) {
 
@@ -107,13 +87,6 @@ int main(int argc, char * argv[]) {
 	int16_t cam1[q_field], cam2[q_field];
 	int16_t Rmn[q_field][dc];
 	int16_t Qn_NEW[q_field][dc];
-
-#ifdef FOR_BACK
-	int a;
-	int16_t R_Forward[q_field][dc], R_Backward[q_field][dc], R_Aux[q_field][dc];
-    int16_t R_aux[q_field], R_aux_2[q_field], R_compare[q_field], R_compare_2[q_field], R_Backward_aux[q_field];
-    int16_t min_temp, min_temp_2, min_temp_3;
-#endif
 
 	int16_t H_decoded[it_max];
 	int MNBE_Hdecoded[it_max];
@@ -273,7 +246,6 @@ int main(int argc, char * argv[]) {
 			        /* Lee el estado del generador aleatorio */
 			        /*
 			        FILE * file = fopen(nombre_file_rng, "r");
-
 			        if (!file)
 				        error = 1;
 			        else
@@ -311,18 +283,16 @@ int main(int argc, char * argv[]) {
 
 					for(i=0;i<q_field;i++)
 						for(j=0;j<N_code;j++)
-							Ln_aux[i][j] = (int) Ln_aux_float[i][j];
+							Ln_aux[i][j] = (int) (Ln_aux_float[i][j]*100);
 							//printf("%d, \n",Ln_aux_int[i][j]);}
 
 					/*if(eC == 1){
-
 						printf("LLR Function: ");
 						for (i = 0; i< q_field; i++){
 							for(j=0; j<N_code;j++)
 								printf("%d, \n",Ln_aux[i][j]);
 							printf("\n");
 						}
-
 					}*/
 					
 					
@@ -412,71 +382,7 @@ int main(int argc, char * argv[]) {
                             /*******************************************/
                             /**********  CNU FUNCTION ******************/
                             /*******************************************/
-#ifdef FOR_BACK
-							// Clean Forward and Backward variables and set value to first and last column
-							// Clean R_Aux
-							for(j=0;j<dc;j++){
-								for(i=0;i<q_field;i++){        
-									if(j==0)
-										R_Forward[i][j] = Qmn[i][j];
-
-									if(j==dc-1){
-										R_Backward[i][j] = Qmn[i][j];
-										R_Aux[i][j] = Qmn[i][j];
-									}      
-								}
-							}
-
-							for(a=2;a<dc;a++){
-								for(i=0;i<q_field;i++){
-
-									min_temp = 10000;
-									min_temp_2 = 10000;     
-									min_temp_3 = 10000;           
-									for(k=0;k<q_field;k++){
-										// Search maximum
-										// Forward
-										if(R_Forward[k][a-2] > Qmn[wires[k][i]][a-1])
-											R_compare[k] = R_Forward[k][a-2];
-										else
-											R_compare[k] = Qmn[wires[k][i]][a-1];
-
-										// Backward
-										if(R_Backward[k][5-a] > Qmn[wires[k][i]][4-a])
-											R_compare_2[k] = R_Backward[k][5-a];
-										else
-											R_compare_2[k] = Qmn[wires[k][i]][4-a];
-
-										// Search minimum
-										// Forward
-										if(R_compare[k] < min_temp)
-											min_temp = R_compare[k];
-										// Backward
-										if(R_compare_2[k] < min_temp_2)
-											min_temp_2 = R_compare_2[k];
-
-										// Standard Min Max
-										// Search maximum
-										if(R_Forward[k][a-2] > R_Backward[wires[k][i]][a])
-												R_compare[k] = R_Forward[k][a-2];
-											else
-												R_compare[k] = R_Backward[wires[k][i]][a];
-										
-										// Search minimum
-										if(R_compare[k] < min_temp_3)
-											min_temp_3 = R_compare[k];
-									}
-									R_Forward[i][a-1] = min_temp;
-									R_Backward[i][4-a] = min_temp_2;
-									Rmn[i][a-1] = min_temp_3;
-								}  
-							}
-
-							for(i=0;i<q_field;i++){
-								Rmn[i][0] =       R_Backward[i][1];
-								Rmn[i][dc-1] =    R_Forward[i][dc-2];
-							}
-#else                                               
+                            
 				            /* paso de mensajes al dominio delta */
 					        for (i=0;i<dc;i++)
 					        {
@@ -602,10 +508,9 @@ int main(int argc, char * argv[]) {
                             printf("dQ_min2 = %7.2f       pos = %d \n", dQ_min2,dQ_pos2);
                             return;
                             */
-#endif                            
+                            
                             for (i=0;i<dc;i++)
-					        {		
-#ifndef FOR_BACK										                
+					        {				                
 						        for (j=0;j<q_field;j++)
 						        {
 							        if ( (j == dQ_pos1) || (j == dQ_pos2) || (j == 0) ) /* Si estamos en el elemento del campo que contiene el minimo de la columna extra entonces... */
@@ -640,7 +545,7 @@ int main(int argc, char * argv[]) {
                                         Rmn[temp[j][i]][i] = oRmn_temp*scaling_factor;
                                     #endif
 					            }
-#endif
+
 					            for (j=0;j<q_field;j++)
 					            {
 						        
@@ -963,4 +868,3 @@ float randn_notrig(float mu, float sigma) //http://www.dreamincode.net/code/snip
     }
 }
 //end Channel
-
