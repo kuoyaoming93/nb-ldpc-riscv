@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -N MM
+#PBS -q corei7
+#PBS -l walltime=9999:00:00
+#
+cd MM15it
+matlab -nodisplay -nosplash 1>  ./out/MM15it.out 2>&1 <<EOF
+	warning off;
+	display('Simulation start .....');
+	sim_Min_Max_in;
+EOF
